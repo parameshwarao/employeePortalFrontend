@@ -2,14 +2,17 @@
     <div class="signIn-block">
         <h3 class="loginHeader">Log in Here To see employee details!</h3>
 
-        <h5 class="invalid-credentails" *ngIf="isPasswordError">Invalid Credentials!</h5>
+        <h5 class="invalid-credentails" *ngIf="isPasswordError">{{errorMessage}}!</h5>
 
         <div class="input_bloc">
             <div>
                 <span class="inputLabel"> User Name </span>
             </div>
             <div>
-                <input type="text" class="inputbox" [(ngModel)]="username" />
+                <input type="text" class="inputbox" [(ngModel)]="username" #userNameVal="ngModel" required/>
+            </div>
+            <div>
+                <span class="errorMessage" *ngIf="(userNameVal.invalid && (userNameVal.dirty || userNameVal.touched))">Please enter username!! </span>
             </div>
         </div>
 
@@ -20,7 +23,10 @@
                 <span class="inputLabel">Password </span>
             </div>
             <div>
-                <input class="inputbox" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" />                
+                <input class="inputbox" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" #passwordFeild="ngModel" required/>                
+            </div>
+            <div>
+                <span class="errorMessage" *ngIf="(passwordFeild.invalid && (passwordFeild.dirty || passwordFeild.touched))">Please enter password!! </span>
             </div>
             <div class="showPassword-block">               
                 <input type="checkbox" class="password-checkbox" [(ngModel)]="passwordShow" >
@@ -31,6 +37,11 @@
         <div>
             <button class="loginButton" (click)="submitHandler()">
                 Login</button>
+        </div>
+
+        <div>
+            <button class="signUpButton" (click)="signUpButtonHandler()">
+                Sign UP!</button>
         </div>
     </div>
 </div>

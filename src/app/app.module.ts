@@ -17,6 +17,8 @@ import { LoginComponent } from './user/login/login.component';
 import { UserModule } from './user/user.module';
 import { EmployeeService } from './shared/service/employee.service';
 import { LoadingInterceptor } from './shared/service/loading-interceptor.service';
+import { TokenInterceptor } from './shared/service/token-interceptor.service';
+import { ListModule } from './list/list.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { LoadingInterceptor } from './shared/service/loading-interceptor.service
     BrowserModule,
     HttpClientModule,  
     UserModule,
+    ListModule,
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent},         
       { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -40,7 +43,12 @@ import { LoadingInterceptor } from './shared/service/loading-interceptor.service
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
       multi: true,
-   }],
+   },
+   {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true,
+ }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

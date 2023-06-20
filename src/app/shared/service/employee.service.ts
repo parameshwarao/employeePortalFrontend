@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
+import { userRequestBody } from '../models/user.model';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class EmployeeService {
   baseURL:string = `${environment.backendOrigin}/`;
   authToken:string ="";
   loginURL:string ="api/auth";
+  signUpURL:string ="api/users";
 
   constructor(private _httpClient : HttpClient) { }
 
@@ -31,5 +33,10 @@ return `${this.baseURL}${urlSegment}`;
       email:userName,
       password:userPassword
     }).pipe(catchError(this.errorHandler));
+  }
+
+  public signUpUsers(userDetails:userRequestBody):Observable<any>{
+    let url:string =this.getHttpUrl(this.signUpURL);
+    return this._httpClient.post(url,userDetails).pipe(catchError(this.errorHandler));
   }
 }

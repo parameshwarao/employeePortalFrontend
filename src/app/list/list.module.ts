@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
-import { EmployeeHomeComponent } from './employee-home/employee-home.component';
+import { RouterModule } from '@angular/router';
+import { CheckAuthGuardService } from '../shared/service/check-auth.service';
+
 
 
 
@@ -11,11 +13,16 @@ import { EmployeeHomeComponent } from './employee-home/employee-home.component';
   declarations: [
     EmployeeListComponent,
     EmployeeDetailComponent,
-    CreateEmployeeComponent,
-    EmployeeHomeComponent
+    CreateEmployeeComponent    
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule.forChild([
+      { path: 'List', component: EmployeeListComponent,canActivate:[CheckAuthGuardService] },
+      { path: 'Listdetail/:id', component: EmployeeDetailComponent,canActivate:[CheckAuthGuardService] },
+      
+    ])
+  ],
+  providers:[CheckAuthGuardService]
 })
 export class ListModule { }

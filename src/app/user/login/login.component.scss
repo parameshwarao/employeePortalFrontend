@@ -1,5 +1,5 @@
 .signIn-block{
-    padding: 0.4em;
+    padding: 3em;
     border: 2px solid #FF8E8E;
     margin: 0.6em;
 }
@@ -27,6 +27,7 @@
 
   $loginButtonColor:#71d6cd;
 .loginButton{
+  margin-top: 0.4em;
     padding: 0.3em;
     border: 1px solid white;
     background-color: $loginButtonColor;
@@ -67,4 +68,26 @@
 .invalid-credentails{
     text-align: center;
     color: red;
+}
+
+.errorMessage{
+  color: red;
+}
+
+$signUpButton:#b55cc7;
+.signUpButton{
+  margin-top: 0.4em;
+  padding: 0.3em;
+    border: 1px solid white;
+    background-color: $signUpButton;
+    color: black;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($signUpButton,10%) !important;
+      background-color:#4BA2E5;
+      transition: all 0.3s ease-out;
+  }
+
 }
