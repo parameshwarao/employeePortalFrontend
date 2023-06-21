@@ -11,14 +11,14 @@
 </div>
 
 <!--Blog Image-->
-<div class="blogImage">
+<div class="blogImage" *ngIf="isUserAuthenticated">
   <img class="image-responsive" src="assets/images/bannerFlyer.jpg" alt="image" width="450" height="400">
 </div>
 
 <!--blog space-->
 <div class="blog-container">
   <!--navigation Container-->
-<div class="nav-container" *ngIf="currentRoute != '/home'">
+<div class="nav-container" *ngIf="isUserAuthenticated">
   <div class="nav-section">
     <div class="responsive-menu">
       <span class="responsive-text">MENU</span>
@@ -31,12 +31,11 @@
     </span>
     </div>
     <div class="nav-menu" [ngClass]="expandResponsiveMenu ?'is-active' : ''">      
-        <a class="nav-link" [routerLink]="['home']"  [routerLinkActive]="['active']">Home</a>      
-        <a class="nav-link" [routerLink]="['about']" [routerLinkActive]="['active']">About Me</a>
-        <a class="nav-link" [routerLink]="['tools']" [routerLinkActive]="['active']">Tools</a>
-        <a class="nav-link" [routerLink]="['personalFinance']" [routerLinkActive]="['active']">Personal Finance</a> 
-        <a class="nav-link" [routerLink]="['blog']" [routerLinkActive]="['active']">blog</a>
-        <a class="nav-link" [routerLink]="['DisclaimerComponent']" [routerLinkActive]="['active']">Disclaimer</a>
+        <a class="nav-link" [routerLink]="['/List']"  [routerLinkActive]="['active']">Employee List</a>      
+        <a class="nav-link" [routerLink]="['/createEmployee']" [routerLinkActive]="['active']">Create Employee</a>
+        <a class="nav-link" [routerLink]="['/pwd-reset']" [routerLinkActive]="['active']">Reset Password</a>
+        <a class="nav-link" (click)="signOut()">Sign out</a>
+        
               
     </div>
   </div>

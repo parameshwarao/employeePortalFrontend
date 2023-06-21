@@ -10,7 +10,7 @@
                     <span class="inputLabel">Name </span>
                 </div>
                 <div>
-                    <input type="text" class="inputbox" formControlName="name" />
+                    <input type="text" placeholder="Enter your name!" class="inputbox" formControlName="name" />
                 </div>
                 <div>
                     <span class="errorMessage"
@@ -23,7 +23,7 @@
                     <span class="inputLabel"> User Name </span>
                 </div>
                 <div>
-                    <input type="text" class="inputbox" formControlName="email" />
+                    <input type="text" placeholder="Enter your email!" class="inputbox" formControlName="email" />
                 </div>
                 <div>
                     <span class="errorMessage"
@@ -38,7 +38,7 @@
                     <span class="inputLabel">Password </span>
                 </div>
                 <div>
-                    <input class="inputbox" [type]="passwordShow ? 'text' : 'password'" formControlName ="password"/>
+                    <input class="inputbox" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" formControlName ="password"/>
                 </div>
                 <div>
                     <span class="errorMessage"

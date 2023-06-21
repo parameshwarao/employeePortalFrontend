@@ -10,11 +10,14 @@ import { userRequestBody } from '../models/user.model';
 })
 export class EmployeeService {
 
-  
+  //flag to check if user authenticated
+  public isUserAuthenticated:boolean = false;
   baseURL:string = `${environment.backendOrigin}/`;
   authToken:string ="";
   loginURL:string ="api/auth";
   signUpURL:string ="api/users";
+  userExistURL:string ="api/auth/userExist";
+  updatePasswordURL:string ="api/auth/updatePassword";
 
   constructor(private _httpClient : HttpClient) { }
 
@@ -38,5 +41,21 @@ return `${this.baseURL}${urlSegment}`;
   public signUpUsers(userDetails:userRequestBody):Observable<any>{
     let url:string =this.getHttpUrl(this.signUpURL);
     return this._httpClient.post(url,userDetails).pipe(catchError(this.errorHandler));
+  }
+
+  public validateUser(useEmail:string ="", appSecertKey:string =""):Observable<any>{
+    let url:string =this.getHttpUrl(this.userExistURL);
+    return this._httpClient.post(url,{
+      email:useEmail,
+      secertKey:appSecertKey
+    }).pipe(catchError(this.errorHandler));
+  }
+
+  public changeUserPassword(userReferenceID:string ="", updatedPassword:string =""):Observable<any>{
+    let url:string =this.getHttpUrl(this.updatePasswordURL);
+    return this._httpClient.post(url,{
+      _id: userReferenceID,    
+      updatedPassword: updatedPassword
+    }).pipe(catchError(this.errorHandler));
   }
 }

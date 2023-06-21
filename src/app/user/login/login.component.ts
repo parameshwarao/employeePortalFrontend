@@ -50,7 +50,11 @@ export class LoginComponent implements OnInit {
   public signUpButtonHandler(){
     this._router.navigate(['/sign-up']);
   }
-  
+
+  public forgotPwdHandler(){
+    this._router.navigate(['/pwd-reset']);
+
+   }
 
   
 

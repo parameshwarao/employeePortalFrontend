@@ -19,6 +19,7 @@ import { CheckAuthGuardService } from '../shared/service/check-auth.service';
     CommonModule,
     RouterModule.forChild([
       { path: 'List', component: EmployeeListComponent,canActivate:[CheckAuthGuardService] },
+      { path: 'createEmployee', component: CreateEmployeeComponent,canActivate:[CheckAuthGuardService] },
       { path: 'Listdetail/:id', component: EmployeeDetailComponent,canActivate:[CheckAuthGuardService] },
       
     ])
