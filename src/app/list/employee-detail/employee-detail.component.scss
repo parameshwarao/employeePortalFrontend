@@ -1,0 +1,77 @@
+$gobackButton: #71d6cd;
+
+.gobackButton {
+    margin-top: 0.4em;
+    padding: 0.3em;
+    border: 1px solid white;
+    background-color: $gobackButton;
+    color: black;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+        color: lighten($gobackButton, 10%) !important;
+        background-color: #4BA2E5;
+        transition: all 0.3s ease-out;
+    }
+}
+
+.data-block {
+    padding: 2em;
+}
+
+.employee-name {
+    font-family: amandaBlack;
+}
+
+.data-label{
+    font-family: cursive;
+    font-size: 1.2em;
+    color: black;
+}
+
+.data-value{
+    font-family: 'Satisfy', cursive;
+    color: green;
+    font-weight: 200;
+    font-size: 1.4em;
+}
+.error{
+    text-align: center;
+    color:red;
+}
+
+$deleteButtonColor:#c00707;
+.deleteButton{
+  margin-top: 0.4em;
+    padding: 0.3em;
+    border: 1px solid white;
+    background-color: $deleteButtonColor;
+    color: white;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($deleteButtonColor,10%) !important;
+      background-color:#4BA2E5;
+      transition: all 0.3s ease-out;
+  }
+}
+
+$updateButtonColor:#a03d04;
+.updateButton{
+  margin-top: 0.4em;
+    padding: 0.3em;
+    border: 1px solid white;
+    background-color: $updateButtonColor;
+    color: white;
+    font-weight: 800;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($updateButtonColor,10%) !important;
+      background-color:#4BA2E5;
+      transition: all 0.3s ease-out;
+  }
+}

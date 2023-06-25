@@ -1,1 +1,79 @@
-<p>employee-list works!</p>
+<div class="search-block">
+
+</div>
+<div class="list-container">
+    <div class="pagination Block">
+        <div class="paginationButtonBlock">
+            <div class="paginationButtons">
+                <button type="button" class="btn btn-primary" (click)="pageBackwardButton()"
+                    [disabled]="(currentPage == 1) ? true : false">Previous</button>
+            </div>
+            <div class="currentPage">
+                <span>Current Page: </span><span>{{currentPage}}</span>
+            </div>
+            <div class="TotalCount">
+                <span>Total Count: </span><span>{{totalCount}}</span>
+            </div>
+            <div class="paginationButtons">
+                <button type="button" (click)="pageForwardButton()" [disabled]="disableForwardButton()"
+                    class="btn btn-primary">Next</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="pagination-dropDownBlock">
+        <div class="pagination-Buttonclock">
+            <span class="pageLables">Select Page </span>
+            <select class="paginationDropdown" [ngModel]="currentPage" (ngModelChange)="updatePage($event)">
+                <ng-container *ngFor="let page of totalPages">
+                    <option [ngValue]="page">{{page}}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div class="pagination-Buttonclock">
+            <span class="pageLables">Record Per Page </span>
+            <select class="paginationDropdown" [ngModel]="pageSize" (ngModelChange)="updatePageSize($event)">
+                <ng-container *ngFor="let pageSize of PageSizeValues">
+                    <option [ngValue]="pageSize">{{pageSize}}</option>
+                </ng-container>
+            </select>
+        </div>
+    </div>
+    <ng-container *ngIf="isError;then errorMessage else showRecords">
+
+    </ng-container>
+    <ng-template #errorMessage>
+        <h1 class="error">{{errorText}}</h1>
+    </ng-template>
+    <ng-template #showRecords>    
+    <div class="data-block">
+        <ng-container *ngFor="let employee of employeeResponse.empdata; let i = index">
+            <div>
+                <h1 class="employee-name">{{'"'}}{{employee.Full_Name || '- - -'}}{{'"'}}</h1>
+                <ul class="employee-card">
+                    <li>
+                        <span class="data-label">Employee ID: </span><span
+                            class="data-value">{{employee.Employee_ID || '- - -'}}</span>
+                    </li>
+                    <li>
+                        <span class="data-label">Job Title: </span><span
+                            class="data-value">{{employee.Job_Title || '- - -'}}</span>
+                    </li>
+                    <li>
+                        <span class="data-label">Department: </span><span
+                            class="data-value">{{employee.Department || '- - -'}}</span>
+                    </li>
+                    <li>
+                        <span class="data-label">Country: </span><span class="data-value">{{employee.Country || '- - -'}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <button class="DetailsButton" (click)="redirectToDetailPage(employee)">
+                    Click Here For Employee Details!</button>
+            </div>
+        </ng-container>
+    </div>
+</ng-template>
+
+</div>

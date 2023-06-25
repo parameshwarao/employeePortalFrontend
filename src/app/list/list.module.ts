@@ -5,6 +5,7 @@ import { EmployeeDetailComponent } from './employee-detail/employee-detail.compo
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
 import { RouterModule } from '@angular/router';
 import { CheckAuthGuardService } from '../shared/service/check-auth.service';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,10 +18,11 @@ import { CheckAuthGuardService } from '../shared/service/check-auth.service';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       { path: 'List', component: EmployeeListComponent,canActivate:[CheckAuthGuardService] },
       { path: 'createEmployee', component: CreateEmployeeComponent,canActivate:[CheckAuthGuardService] },
-      { path: 'Listdetail/:id', component: EmployeeDetailComponent,canActivate:[CheckAuthGuardService] },
+      { path: 'Listdetail', component: EmployeeDetailComponent,canActivate:[CheckAuthGuardService] },
       
     ])
   ],
