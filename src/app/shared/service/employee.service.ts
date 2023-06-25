@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError,forkJoin } from 'rxjs';
 import { userRequestBody } from '../models/user.model';
 import { createEmployeeReqbody, empoloyeeListReq, updateEmployeeReqBody } from '../models/employee.model';
 
@@ -25,6 +25,13 @@ export class EmployeeService {
   employeeDetailURL:string ="api/employee/employeeDetail";
   updateEmployeeURL:string ="api/employee/updateEmployee";
   removeEmployeeURL:string ="api/employee/RemoveEmployee";
+
+  getAllDepartmentOptionURL:string ="api/employee/DepartmentOptions";
+  getAllBussinessOptionURL:string ="api/employee/BussinessUnitOptions";
+  getAllCountryOptionURL:string = "api/employee/CountryOptions";
+  getallCityOptionsURL:string = "api/employee/CityOptions";
+  getallGenderOptionsURL:string ="api/employee/GenderOptions";
+  getallEthnicityOptionsURL:string = "api/employee/EthnicityOptions";
 
   constructor(private _httpClient : HttpClient) { }
 
@@ -95,5 +102,42 @@ return `${this.baseURL}${urlSegment}`;
   }
 
 
+  //forkjoin concept
+
+  public getAllSearchOptions():Observable<any>{
+      
+    
+
+    let AllrequestObservables = [];
+
+    //department options
+    let departmentUrl :string =this.getHttpUrl(this.getAllDepartmentOptionURL);    
+    AllrequestObservables.push(this._httpClient.get(departmentUrl).pipe(catchError(this.errorHandler)));
+
+    //bussiness options
+    let bussinessOptionUrl :string =this.getHttpUrl(this.getAllBussinessOptionURL);    
+    AllrequestObservables.push(this._httpClient.get(bussinessOptionUrl).pipe(catchError(this.errorHandler)));
+
+    //country options
+    let countryOptionUrl :string =this.getHttpUrl(this.getAllCountryOptionURL);    
+    AllrequestObservables.push(this._httpClient.get(countryOptionUrl).pipe(catchError(this.errorHandler)));
+
+    //city options
+    let cityOptionUrl :string =this.getHttpUrl(this.getallCityOptionsURL);    
+    AllrequestObservables.push(this._httpClient.get(cityOptionUrl).pipe(catchError(this.errorHandler)));
+
+    //gender options
+    let genderOptionUrl :string =this.getHttpUrl(this.getallGenderOptionsURL);    
+    AllrequestObservables.push(this._httpClient.get(genderOptionUrl).pipe(catchError(this.errorHandler)));
+
+    //ethnicity options
+    let ethnicityOptionUrl :string =this.getHttpUrl(this.getallEthnicityOptionsURL);    
+    AllrequestObservables.push(this._httpClient.get(ethnicityOptionUrl).pipe(catchError(this.errorHandler)));
+
+
+    return forkJoin(AllrequestObservables);
+
+  }
+  
 
 }

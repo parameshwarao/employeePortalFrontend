@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { employeeObject, employeeResponse, empoloyeeListReq } from '../../shared/models/employee.model';
 import { EmployeeService } from '../../shared/service/employee.service';
 import { Router } from '@angular/router';
+import { Subscription, debounceTime, fromEvent } from 'rxjs';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss']
 })
-export class EmployeeListComponent implements OnInit, AfterViewInit {
+export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public employeeListRequestBody: empoloyeeListReq = new empoloyeeListReq();
   public employeeResponse: employeeResponse = new employeeResponse();
@@ -21,16 +22,65 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
   public pageIndex: number = 0;
 
   public PageSizeValues: number[] = [10, 15, 30, 50, 100];
-  public errorMessage:string [] = ["No Records Found!","Error Connecting Server!"];
-  public errorText:string ="";
-  public isError:boolean = false;
+  public errorMessage: string[] = ["No Records Found!", "Error Connecting Server!"];
+  public errorText: string = "";
+  public isError: boolean = false;
 
+  public employeeIdSearchText: string = "";
+  public employeeNameSearchText: string = "";
 
+  public allDepartmentOptions: string[] = [];
+  public allBussinessUnitOptions: string[] = [];
+  public allCountryOptions: string[] = [];
+  public allCityOptions: string[] = [];
+  public allGenderOptions: string[] = [];
+  public allEthnicityOptions: string[] = [];
 
+  public selectedDepartmentOption: string = "";
+  public selectedBuOption: string = "";
+  public selectedCountryOption: string = "";
+  public selectedCityOption: string = "";
+  public selectedGenderOption: string = "";
+  public selectedEthnicityOption: string = "";
+
+  public searchTextSub: Subscription = new Subscription();
+
+  @ViewChild('nameSearchText', { static: false }) nameSearchTextEle: ElementRef = {} as ElementRef;
 
   constructor(private _EmployeeService: EmployeeService, private _router: Router) { }
+  ngOnDestroy(): void {
+    if (this.searchTextSub) {
+      this.searchTextSub.unsubscribe();
+    }
+  }
   ngAfterViewInit(): void {
     this.getEmployeeList();
+    this.getAllOptions();
+    this.subscribeToSearchTextEvents();
+  }
+
+  subscribeToSearchTextEvents() {
+    this.searchTextSub = fromEvent(this.nameSearchTextEle.nativeElement, 'keyup').pipe(debounceTime(1200)).subscribe((element) => {
+      if (element) {
+        this.employeeListRequestBody.Full_Name = <string>(element as any).target.value;
+        this.getEmployeeList();
+      }
+
+    });
+  }
+
+  public resetAllFeilds() {
+    this.selectedDepartmentOption = "";
+    this.selectedBuOption = "";
+    this.selectedCountryOption = "";
+    this.selectedCityOption = "";
+    this.selectedGenderOption = "";
+    this.selectedEthnicityOption = "";
+    this.employeeNameSearchText = "";
+
+    this.employeeListRequestBody = new empoloyeeListReq();
+    this.pageSize = this.employeeListRequestBody.recordPerPage;
+    this.getEmployeeList(true);
   }
 
   getEmployeeList(resetPagination: boolean = true) {
@@ -56,13 +106,17 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
     this._EmployeeService.getEmployeeList(this.employeeListRequestBody).subscribe({
       next: (data) => {
         this.employeeResponse = data;
-        if(this.employeeResponse.empdata.length == 0){
+        if (this.employeeResponse.empdata.length == 0) {
           this.isError = true;
           this.errorText = this.errorMessage[0];
+          this.updatePagination(0);
         }
+        else{
         this.totalCount = this.employeeResponse.totalCount[0].count;
-        
         this.updatePagination(this.totalCount);
+
+        }
+        
       },
       error: (err) => {
         this.isError = true;
@@ -127,6 +181,65 @@ export class EmployeeListComponent implements OnInit, AfterViewInit {
 
   redirectToDetailPage(employee: employeeObject) {
     this._router.navigate(['/Listdetail'], { queryParams: { id: employee._id } });
+  }
+
+  public getAllOptions() {
+    this._EmployeeService.getAllSearchOptions().subscribe({
+      next: (data) => {
+        let [
+          departmentoptions,
+          bussinessoptions,
+          countryOptions,
+          cityOptions,
+          genderOptions,
+          ethnicityOptions] = data;
+
+
+
+        this.allDepartmentOptions = departmentoptions;
+        this.allBussinessUnitOptions = bussinessoptions;
+        this.allCountryOptions = countryOptions;
+        this.allCityOptions = cityOptions;
+        this.allGenderOptions = genderOptions;
+        this.allEthnicityOptions = ethnicityOptions;
+
+
+      },
+      error: (err) => {
+        console.log(err);
+      }
+
+    })
+  }
+
+  public onDepartmentSelect(department: string) {
+    this.employeeListRequestBody.Department = department;
+    this.getEmployeeList();
+  }
+
+  public onBussinessUnitSelect(bussinessUnit: string) {
+    this.employeeListRequestBody.Business_Unit = bussinessUnit;
+    this.getEmployeeList();
+  }
+
+  public onCountrySelect(country: string) {
+    this.employeeListRequestBody.Country = country;
+    this.getEmployeeList();
+  }
+
+  public onGenderSelect(gender: string) {
+    this.employeeListRequestBody.Gender = gender;
+    this.getEmployeeList();
+  }
+
+  public onEthnicitySelect(ethnicity: string) {
+    this.employeeListRequestBody.Ethnicity = ethnicity;
+    this.getEmployeeList();
+  }
+
+  public onCitySelect(city: string) {
+    this.employeeListRequestBody.City = city;
+    this.getEmployeeList();
   }
 
 }

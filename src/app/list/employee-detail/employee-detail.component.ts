@@ -49,4 +49,8 @@ public isError:boolean = false;
 
   }
 
+  updateEmployee(){
+    
+  }
+
 }

@@ -54,6 +54,33 @@ padding: 2em;
     border: 1px solid grey;
 }
 
+.search-inputbox{
+    width: 50%;
+    border-radius: 7px;
+    border: 1px solid grey;
+}
+
+@mixin searchDropdowns{
+    width: 50%;
+    border-radius: 7px;
+    border: 1px solid grey;
+    cursor: pointer; 
+}
+
+.departmentDropdown{
+    @include searchDropdowns;
+}
+
+.select-label-search{
+    font-size: 1.1em;
+    font-weight: bolder;
+    text-decoration: underline;
+}
+
+.search-container{
+    padding: 1em;
+}
+
 .pageLables{
     font-weight: 700;
     font-family: 'amandaBlack';
@@ -93,6 +120,23 @@ $detailsbuttonColor:#71d6cd;
 .error{
     text-align: center;
     color:red;
+}
+
+$resetbuttonColor:#71d6cd;
+.resetButton{
+  margin-top: 0.4em;
+    padding: 0.3em;
+    border: 1px solid white;
+    background-color: $resetbuttonColor;
+    color: black;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($resetbuttonColor,10%) !important;
+      background-color:#4BA2E5;
+      transition: all 0.3s ease-out;
+  }
 }
 
 //reponsive
