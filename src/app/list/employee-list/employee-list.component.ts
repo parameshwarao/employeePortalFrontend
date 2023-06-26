@@ -47,6 +47,8 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('nameSearchText', { static: false }) nameSearchTextEle: ElementRef = {} as ElementRef;
 
+  @ViewChild('empIDSearchText', { static: false }) empIDSearchTextEle: ElementRef = {} as ElementRef;
+
   constructor(private _EmployeeService: EmployeeService, private _router: Router) { }
   ngOnDestroy(): void {
     if (this.searchTextSub) {
@@ -67,6 +69,16 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
     });
+
+    this.searchTextSub.add(
+      fromEvent(this.empIDSearchTextEle.nativeElement, 'keyup').pipe(debounceTime(1200)).subscribe((element) => {
+        if (element) {
+          this.employeeListRequestBody.Employee_ID = <string>(element as any).target.value;
+          this.getEmployeeList();
+        }
+
+      })
+    );
   }
 
   public resetAllFeilds() {
@@ -77,6 +89,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedGenderOption = "";
     this.selectedEthnicityOption = "";
     this.employeeNameSearchText = "";
+    this.employeeIdSearchText = "";
 
     this.employeeListRequestBody = new empoloyeeListReq();
     this.pageSize = this.employeeListRequestBody.recordPerPage;
@@ -111,12 +124,12 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.errorText = this.errorMessage[0];
           this.updatePagination(0);
         }
-        else{
-        this.totalCount = this.employeeResponse.totalCount[0].count;
-        this.updatePagination(this.totalCount);
+        else {
+          this.totalCount = this.employeeResponse.totalCount[0].count;
+          this.updatePagination(this.totalCount);
 
         }
-        
+
       },
       error: (err) => {
         this.isError = true;

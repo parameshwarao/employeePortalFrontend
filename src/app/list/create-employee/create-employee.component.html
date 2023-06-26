@@ -181,7 +181,10 @@
 
             <div>
                 <button class="signUpButton" (click)="createOrUpdateEmployee()">
-                    Create Employee!</button>
+                    <ng-container *ngIf="isEdit;then update else create"></ng-container>
+                    <ng-template #update><span>Update Employee!</span></ng-template>
+                    <ng-template #create><span>Create Employee!</span></ng-template>                    
+                </button>
             </div>
 
             <div>

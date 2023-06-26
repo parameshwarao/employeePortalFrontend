@@ -125,6 +125,19 @@
 
             </div>
 
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by EMP ID
+                    </span>
+                </div>
+                <div class="select-element">
+                    <input #empIDSearchText type="text" class="search-inputbox" [(ngModel)]="employeeIdSearchText"
+                        placeholder="search by emp ID" />
+                </div>
+
+            </div>
+
 
             <div>
                 <button class="resetButton" (click)="resetAllFeilds()">

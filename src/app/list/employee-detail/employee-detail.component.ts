@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { EmployeeService } from '../../shared/service/employee.service';
@@ -12,8 +12,11 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './employee-detail.component.html',
   styleUrls: ['./employee-detail.component.scss']
 })
-export class EmployeeDetailComponent implements OnInit, AfterViewInit {
+export class EmployeeDetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
   public isError: boolean = false;
+
+  public deleteMessageInfo: string = "";
+  public deleteErrorMessage: string = "";
 
   public enableEdit: boolean = false;
 
@@ -23,12 +26,17 @@ export class EmployeeDetailComponent implements OnInit, AfterViewInit {
     this._router,
     this._EmployeeService);
 
+  @ViewChild('deleteModal', { static: false }) deleteModalRef: ElementRef<any> = {} as ElementRef;
+
   employeeDetail: detailResponse = new detailResponse();
   constructor(private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _location: Location,
     private _EmployeeService: EmployeeService,
     private _FormBuilder: FormBuilder) {
+
+  }
+  ngAfterViewChecked(): void {
 
   }
   ngAfterViewInit(): void {
@@ -60,7 +68,7 @@ export class EmployeeDetailComponent implements OnInit, AfterViewInit {
   }
 
   deleteEmployee() {
-
+    this.showDeleteModal();
   }
 
   updateEmployee() {
@@ -69,13 +77,42 @@ export class EmployeeDetailComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this._createEmployeeRef.updateFormForEdit(employeeDat);
     });
-    
+
   }
 
   updateEmployeeHandler($event: any) {
     this.enableEdit = false;
     this.getEmployeeDetails(this.id);
 
+  }
+
+  confirmClose(deleteStatus: boolean) {
+
+    if (deleteStatus) {
+      this._EmployeeService.deleteEmployee(this.employeeDetail._id).subscribe({
+        next: (data) => {
+          this.closeDeleteModal();
+          this.deleteMessageInfo = "Employee Record Has Been Deleted!! Redirecting..."
+          setTimeout(() => {
+            this._router.navigate(['/List']);
+          }, 1500);
+        },
+        error: () => {
+          this.closeDeleteModal();
+          this.deleteErrorMessage = "Error Deleting Record , server Error";
+        }
+      });
+    } else {
+      this.closeDeleteModal();
+    }
+
+  }
+
+  showDeleteModal() {
+    this.deleteModalRef.nativeElement.show();
+  }
+  closeDeleteModal() {
+    this.deleteModalRef.nativeElement.close();
   }
 
 }

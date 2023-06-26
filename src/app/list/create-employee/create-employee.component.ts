@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { EmployeeService } from '../../shared/service/employee.service';
 import { createEmployeeReqbody, employeeObject, updateEmployeeReqBody } from '../../shared/models/employee.model';
 
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'create-employee',
@@ -73,24 +74,17 @@ export class CreateEmployeeComponent implements OnInit {
       Bonus
     } = employeeObject;
 
-    let hiredate = Hire_Date ? new Date(`${Hire_Date}`) : "";
-    let annualSalary = employeeObject.Annual_Salary ?  employeeObject.Annual_Salary.split("$") : "";
-    let bonus = employeeObject.Bonus ?  employeeObject.Bonus.split("%") : "";
-
-    let hiredateVal = Hire_Date ?  Hire_Date : "";
-
-    var dateString = hiredateVal; // Oct 23
-
-var dateParts = dateString.split("/");
-//continue with date bug!!
-
-
-    let annualSalaryVal = annualSalary[1] ? parseFloat(`${annualSalary[1].trim()}`) : "";
-    let bonusVal = bonus[0] ? Number(`${bonus[0].trim()}`) : "";
-
+   
     
 
     
+    let annualSalaryVal = employeeObject.Annual_Salary ?  employeeObject.Annual_Salary : "";
+    let bonusVal = employeeObject.Bonus ?  employeeObject.Bonus : "";
+
+    let annualSalary = annualSalaryVal ? this.removeCommaAndWhiteSpace(annualSalaryVal) : "";
+    let bonus = bonusVal ?  this.removeCommaAndWhiteSpace(bonusVal) : "";
+
+    let HiringDate = Hire_Date ? this.convertDateToProperData(Hire_Date) : "";
 
 
     this.createEmployeeForm = this._FormBuilder.group({
@@ -102,12 +96,28 @@ var dateParts = dateString.split("/");
       Gender: [`${employeeObject.Gender}`, Validators.required],
       Ethnicity: [`${employeeObject.Ethnicity}`, Validators.required],
       Age: [`${employeeObject.Age}`, Validators.required],
-      Hire_Date: [hiredateVal, Validators.required],
-      Annual_Salary: [annualSalaryVal, Validators.required],
-      Bonus: [bonusVal, Validators.required],
+      Hire_Date: [HiringDate, Validators.required],
+      Annual_Salary: [annualSalary, Validators.required],
+      Bonus: [bonus, Validators.required],
       Country: [`${employeeObject.Country}`, Validators.required],
       City: [`${employeeObject.City}`, Validators.required]
     });
+  }
+
+  removeCommaAndWhiteSpace(value:string):number{
+    let cleanString: string = value.replace(/[^\w\s]/gi, '');
+    let onlyNumber: string = cleanString.replace(/[, ]+/g, " ").trim();
+    let convertedNumber:number = Number(onlyNumber);
+    return convertedNumber;
+  }
+
+  convertDateToProperData(dateString:string):string {
+    let parsed = DateTime.fromFormat(dateString.trim(),"dd-MM-yyyy");
+		if (parsed.isValid) {
+			return `${parsed.toFormat('yyyy-MM-dd')}`;
+		} else {
+			return "";
+		}
   }
 
   createOrUpdateEmployee() {
@@ -181,6 +191,10 @@ var dateParts = dateString.split("/");
 
         this.createEmployeeReq = new createEmployeeReqbody();
 
+        let formattedDate = DateTime.fromISO(Hire_Date.trim()).toFormat("dd-MM-yyyy");
+
+       let userHireDate = formattedDate ? formattedDate : "";
+
         this.createEmployeeReq = {
           Employee_ID: `${Employee_ID}`,
           Full_Name: `${Full_Name}`,
@@ -190,7 +204,7 @@ var dateParts = dateString.split("/");
           Gender: `${Gender}`,
           Ethnicity: `${Ethnicity}`,
           Age: `${Age}`,
-          Hire_Date: `${Hire_Date}`,
+          Hire_Date: `${userHireDate}`,
           Annual_Salary: `$`+`${Annual_Salary}`,
           Bonus: `${Bonus}%`,
           Country: `${Country}`,
@@ -198,6 +212,7 @@ var dateParts = dateString.split("/");
         };
 
         //api call
+        
         this._EmployeeService.createEmployee(this.createEmployeeReq).subscribe({
           next: (data) => {
             this.ScrollToTop();
@@ -221,6 +236,7 @@ var dateParts = dateString.split("/");
           }
         });
 
+        
       }
 
 

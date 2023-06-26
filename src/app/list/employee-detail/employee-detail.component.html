@@ -3,12 +3,14 @@
         Go Back</button>
 </div>
 
+<h1 class="info" *ngIf="deleteMessageInfo">{{deleteMessageInfo}}</h1>
+<h1 class="error" *ngIf="deleteErrorMessage">{{deleteErrorMessage}}</h1>
+
 <ng-container *ngIf="enableEdit;then editCmp else detailCmp"></ng-container>
 
 <ng-template #editCmp>
-<create-employee #createEmpRef
-[isEdit]="enableEdit"
-(recordUpdated)="updateEmployeeHandler($event)"></create-employee>
+    <create-employee #createEmpRef [isEdit]="enableEdit"
+        (recordUpdated)="updateEmployeeHandler($event)"></create-employee>
 </ng-template>
 <ng-template #detailCmp>
 
@@ -101,3 +103,12 @@
         </div>
     </ng-template>
 </ng-template>
+
+<dialog #deleteModal>
+    <h2>Are you sure You want to Delete {{employeeDetail.Full_Name}}'s record from Database ?</h2>
+    <div class="delete-modal">
+        <button class="cancelButton" (click)="confirmClose(false)">cancel</button>
+        <button class="deleteButton" (click)="confirmClose(true)">Confirm Delete!</button>
+    </div>
+
+</dialog>
