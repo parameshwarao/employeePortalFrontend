@@ -23,7 +23,7 @@
                 <span class="inputLabel">Password </span>
             </div>
             <div>
-                <input class="inputbox" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" #passwordFeild="ngModel" required/>                
+                <input class="inputbox" (keyup.enter)="submitHandler()" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" #passwordFeild="ngModel" required/>                
             </div>
             <div>
                 <span class="errorMessage" *ngIf="(passwordFeild.invalid && (passwordFeild.dirty || passwordFeild.touched))">Please enter password!! </span>
