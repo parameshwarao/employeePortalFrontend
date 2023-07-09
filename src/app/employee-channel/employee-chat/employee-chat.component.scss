@@ -1,0 +1,100 @@
+.chat-window-block {
+    padding: 3em;
+    border: 2px solid #FF8E8E;
+    margin: 0.6em;
+}
+
+.loginHeader {
+    text-decoration: underline;
+    font-family: catchyHeader;
+}
+
+.inputbox {
+    width: 60%;
+    margin-top: 1em;
+    margin-bottom: 0.2em;
+    border-radius: 7px;
+    padding: 0.6em;
+    font-size: 1em;
+    font-family: catchyHeader;
+    border: 1px solid grey;
+}
+
+.input_bloc {
+    padding: 0.2em;
+    font-weight: 700;
+}
+
+$sendMessageButton:#71d6cd;
+.sendMessageButton{
+  margin-top: 0.4em;
+    padding: 0.3em;
+    border: 1px solid white;
+    background-color: $sendMessageButton;
+    color: black;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($sendMessageButton,10%) !important;
+      background-color:#4BA2E5;
+      transition: all 0.3s ease-out;
+  }
+}
+
+.message-box{
+    border: 1px solid #FF8E8E;
+    background-color: white;
+    height: 50vh;
+    overflow-y: scroll;
+    border-radius: 3px;
+    padding: 1em;
+}
+
+.message-container{
+    border-radius: 5px;
+    box-shadow: 0 5px 15px black;
+    padding: 0.8em;
+    margin: 1.2em;
+    background-color: cornsilk;
+    height: auto;
+    font-size: 1em;
+    word-break: break-all;
+}
+
+.message-header{
+    font-weight: bolder;
+    color: brown;
+    font-size: 1.2em;
+    font-family: 'Satisfy';
+}
+
+.message-block{
+    font-size: 1.2em;
+    font-family: cursive;
+    color: #310e3a;
+}
+
+.userIdleInfo{
+    text-align: center;
+    padding: 0.3em;
+    color: #7120db;
+    font-family: catchyHeader;
+    font-size: 1.4em;
+}
+
+.userLeaveInfo{
+    text-align: center;
+    padding: 0.3em;
+    color: #af0c1a;
+    font-family: catchyHeader;
+    font-size: 1.4em;
+}
+
+.userEnterInfo{
+    text-align: center;
+    padding: 0.3em;
+    color: #0a4612;
+    font-family: catchyHeader;
+    font-size: 1.4em;
+}

@@ -33,6 +33,7 @@
     <div class="nav-menu" [ngClass]="expandResponsiveMenu ?'is-active' : ''">      
         <a class="nav-link" [routerLink]="['/List']"  [routerLinkActive]="['active']">Employee List</a>      
         <a class="nav-link" [routerLink]="['/createEmployee']" [routerLinkActive]="['active']">Create Employee</a>
+        <a class="nav-link" [routerLink]="['/employeeChat']" [routerLinkActive]="['active']">Employee Channel</a>
         <a class="nav-link" [routerLink]="['/pwd-reset']" [routerLinkActive]="['active']">Reset Password</a>
         <a class="nav-link" (click)="signOut()">Sign out</a>
         

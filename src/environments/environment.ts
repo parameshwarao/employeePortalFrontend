@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendOrigin:"https://employeedatarepo.parameshwarrao.repl.co"
+  backendOrigin:"http://localhost:5000"
 };
 
 /*

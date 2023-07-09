@@ -12,11 +12,11 @@ export class CheckAuthGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean  {
    let authToken = sessionStorage.getItem('authToken');
    if(authToken){
-    this._EmployeeService.isUserAuthenticated = true;
+    this._EmployeeService.isUserAuthenticated = true;    
     return true;
    }
-   this._EmployeeService.isUserAuthenticated = false;
-   this._router.navigate(['/']);
+   this._EmployeeService.isUserAuthenticated = false;   
+   this._router.navigate(['/']);   
    return false;
   }
 }

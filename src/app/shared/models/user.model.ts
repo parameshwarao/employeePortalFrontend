@@ -4,7 +4,11 @@ export class userRequestBody {
     password: string = "";
 }
 
+export class authenicationStatus{
+    isAuthenticated:boolean =false;
+    hasAuthenticationCheck:boolean = false;
 
+}
 
 export class userExistResponse {
     authtoken: string = "";

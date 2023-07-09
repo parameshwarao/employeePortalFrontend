@@ -1,0 +1,66 @@
+<div class="chat-container">
+    
+
+    <div class="chat-window-block">
+        <h3 class="loginHeader">Employee Chat Channel</h3>
+        <div class="message-box" #chatScroll>
+            <div>
+                <ng-container *ngFor="let message of messages" [ngSwitch]="message.messageType">
+
+                    <!--message block-->
+
+                    <div class="message-container" *ngSwitchCase="'chatMessage'">
+                        <div class="message-header">
+                            <span>{{message.userid}}</span>
+                        </div>
+                        <div class="message-block">
+                            <span>{{message.message}}</span>
+                        </div>                     
+                    </div>
+
+                    <!--user enter block-->
+
+                    <div class="userEnterInfo" *ngSwitchCase="'joined'">                       
+                        <div class="user-enter">
+                            <span>{{message.message}}</span>
+                        </div>                     
+                    </div>
+
+                    <!--user leave block-->
+
+                    <div class="userLeaveInfo" *ngSwitchCase="'left'">                        
+                        <div class="user-leftBlock">
+                            <span>{{message.message}}</span>
+                        </div>                     
+                    </div>
+
+                    <div class="userIdleInfo" *ngSwitchCase="'userIdle'">                        
+                        <div class="user-idleBlock">
+                            <span>{{message.message}}</span>
+                        </div>                     
+                    </div>
+
+                    <!--default-->
+
+                    <div class="message-container" *ngSwitchDefault>
+                        <div class="message-header">
+                            <span>{{message.userid}}</span>
+                        </div>
+                        <div class="message-block">
+                            <span>{{message.message}}</span>
+                        </div>                     
+                    </div>
+                    
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="input_bloc">
+            <input type="text" (keyup.enter)="sendMessage()" class="inputbox" placeholder="Enter Your Message" [(ngModel)]="userMessage">
+        </div>
+        <div>
+            <button class="sendMessageButton" (click)="sendMessage()">send Message</button>
+        </div>
+    </div>
+
+</div>

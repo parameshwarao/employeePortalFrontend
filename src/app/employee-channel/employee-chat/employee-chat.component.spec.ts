@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RiskMangementComponent } from './risk-mangement.component';
+import { EmployeeChatComponent } from './employee-chat.component';
 
-describe('RiskMangementComponent', () => {
-  let component: RiskMangementComponent;
-  let fixture: ComponentFixture<RiskMangementComponent>;
+describe('EmployeeChatComponent', () => {
+  let component: EmployeeChatComponent;
+  let fixture: ComponentFixture<EmployeeChatComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RiskMangementComponent ]
+      declarations: [ EmployeeChatComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RiskMangementComponent);
+    fixture = TestBed.createComponent(EmployeeChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

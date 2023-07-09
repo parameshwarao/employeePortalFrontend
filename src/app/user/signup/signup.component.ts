@@ -51,7 +51,11 @@ export class SignupComponent implements OnInit {
         next: (data) => {
           if (data.token) {
             //set auth token here
-            sessionStorage.setItem('authToken', data.token);
+            sessionStorage.setItem('authToken', data.token); 
+            this._EmployeeService.userAuthenicationStats.next({
+              hasAuthenticationCheck:false,
+              isAuthenticated:true
+            });           
             this._router.navigate(['/List']);
           }
 
