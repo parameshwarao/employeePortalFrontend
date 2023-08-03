@@ -31,14 +31,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "bootstrap/dist/css/bootstrap.min.css"
+              "src/styles.scss"              
             ],
-            "scripts": [
-              "jquery/dist/jquery.min.js",
-              "popper.js/dist/umd/popper.min.js",
-              "bootstrap/dist/js/bootstrap.min.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
