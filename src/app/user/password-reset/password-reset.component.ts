@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../shared/service/employee.service';
 import { userExistResponse } from '../../shared/models/user.model';
@@ -20,9 +20,9 @@ export class PasswordResetComponent implements OnInit {
   public passwordShow: boolean = false;
   public errorMessage: string = "";
   //one form user validation
-  userValidationForm: FormGroup = new FormGroup({});
+  userValidationForm: UntypedFormGroup = new UntypedFormGroup({});
   //to hold new password
-  newPasswordForm: FormGroup = new FormGroup({});
+  newPasswordForm: UntypedFormGroup = new UntypedFormGroup({});
   isError:boolean = false;
 
   updatedInfo:string ="";
@@ -33,7 +33,7 @@ export class PasswordResetComponent implements OnInit {
 
   }
 
-  constructor(private _FormBuilder: FormBuilder,
+  constructor(private _FormBuilder: UntypedFormBuilder,
     private _router: Router,
     private _EmployeeService: EmployeeService) { }
 

@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "raomeanapp"
+  "cli": {
+    "analytics": false
+  }
 }

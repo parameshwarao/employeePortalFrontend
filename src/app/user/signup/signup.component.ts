@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { userRequestBody } from '../../shared/models/user.model';
 import { EmployeeService } from '../../shared/service/employee.service';
@@ -13,10 +13,10 @@ export class SignupComponent implements OnInit {
 
   public passwordShow: boolean = false;
   public errorMessage: string = "";
-  signupForm: FormGroup = new FormGroup({});
+  signupForm: UntypedFormGroup = new UntypedFormGroup({});
   isError:boolean = false;
   constructor(
-    private _FormBuilder: FormBuilder,
+    private _FormBuilder: UntypedFormBuilder,
     private _router: Router,
     private _EmployeeService: EmployeeService) { }
 

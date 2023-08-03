@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { EmployeeService } from '../../shared/service/employee.service';
 import { detailResponse, employeeObject } from '../../shared/models/employee.model';
 import { CreateEmployeeComponent } from '../create-employee/create-employee.component';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -33,7 +33,7 @@ export class EmployeeDetailComponent implements OnInit, AfterViewInit, AfterView
     private _router: Router,
     private _location: Location,
     private _EmployeeService: EmployeeService,
-    private _FormBuilder: FormBuilder) {
+    private _FormBuilder: UntypedFormBuilder) {
 
   }
   ngAfterViewChecked(): void {

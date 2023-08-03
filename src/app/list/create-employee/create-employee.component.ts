@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../shared/service/employee.service';
 import { createEmployeeReqbody, employeeObject, updateEmployeeReqBody } from '../../shared/models/employee.model';
@@ -14,7 +14,7 @@ import { DateTime } from 'luxon';
 export class CreateEmployeeComponent implements OnInit {
 
   public errorMessage: string = "";
-  createEmployeeForm: FormGroup = new FormGroup({});
+  createEmployeeForm: UntypedFormGroup = new UntypedFormGroup({});
   isError: boolean = false;
   updatedInfo: string = "";
 
@@ -27,7 +27,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   public createEmployeeReq: createEmployeeReqbody = new createEmployeeReqbody();
 
-  constructor(private _FormBuilder: FormBuilder,
+  constructor(private _FormBuilder: UntypedFormBuilder,
     private _router: Router,
     private _EmployeeService: EmployeeService) { }
 
